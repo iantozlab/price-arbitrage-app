@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookies Policy - Price Arbitrage Finder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f8ff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .last-updated {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #4361ee;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f4ff;
+        }
+        
+        h3 {
+            color: #3a0ca3;
+            margin: 1.2rem 0 0.8rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .cookie-table th, .cookie-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cookie-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .cookie-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .cookie-category {
+            font-weight: 600;
+            color: #3a0ca3;
+        }
+        
+        .cookie-purpose {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: #4361ee;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a0ca3;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid #4361ee;
+            color: #4361ee;
+        }
+        
+        .btn-outline:hover {
+            background-color: #f0f4ff;
+        }
+        
+        .toggle-container {
+            margin: 1.5rem 0;
+        }
+        
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .toggle-label {
+            flex: 1;
+        }
+        
+        .toggle-label strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        
+        .toggle-label p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #4361ee;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+        
+        input:disabled + .toggle-slider {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .contact-info {
+            background-color: #f0f4ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            color: #6c757d;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .content-card {
+                padding: 1.5rem;
+            }
+            
+            .cookie-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-cookie-bite"></i> Cookies Policy</h1>
+            <p class="subtitle">Price Arbitrage Finder - How we use cookies and similar technologies</p>
+        </header>
+        
+        <div class="last-updated">
+            <i class="fas fa-history"></i> Last updated: June 15, 2023
+        </div>
+        
+        <div class="content-card">
+            <h2>Introduction</h2>
+            <p>This Cookies Policy explains how Price Arbitrage Finder ("we", "us", or "our") uses cookies and similar technologies to recognize you when you visit our application. It explains what these technologies are and why we use them, as well as your rights to control our use of them.</p>
+            
+            <p>Our use of cookies is specifically tailored to our price arbitrage services. We use cookies to enhance your experience, provide our services, and understand how our application is being used to improve our offerings.</p>
+            
+            <h2>What are cookies?</h2>
+            <p>Cookies are small data files that are placed on your computer or mobile device when you visit a website or use an online service. Cookies are widely used by online service providers to facilitate and improve their services, and to provide reporting information.</p>
+            
+            <p>Cookies set by the service provider are called "first party cookies". Cookies set by parties other than the service provider are called "third party cookies". Third party cookies enable third party features or functionality to be provided on or through the service (such as advertising, interactive content, and analytics).</p>
+            
+            <h2>Why we use cookies</h2>
+            <p>We use first and third party cookies for several reasons. Some cookies are required for technical reasons for our application to operate, and we refer to these as "essential" or "strictly necessary" cookies. Other cookies enable us to track and target the interests of our users to enhance the experience on our application. Third parties serve cookies through our application for advertising, analytics, and other purposes.</p>
+            
+            <h2>Types of cookies we use</h2>
+            
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Purpose</th>
+                        <th>Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="cookie-category">Essential Cookies</td>
+                        <td>These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in, or filling in forms.</td>
+                        <td>session_id, csrf_token, auth_token</td>
+                    </tr>
+                    <tr>
+                        <td class="cookie-category">Performance Cookies</td>
+                        <td>These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site.</td>
+                        <td>_ga, _gid, _gat (Google Analytics)</td>
+                    </tr>
+                    <tr>
+                        <td class="cookie-category">Functionality Cookies</td>
+                        <td>These enable the website to provide enhanced functionality and personalization. They may be set by us or by third party providers whose services we have added to our pages.</td>
+                        <td>user_preferences, recently_viewed, currency_pref</td>
+                    </tr>
+                    <tr>
+                        <td class="cookie-category">Targeting Cookies</td>
+                        <td>These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant ads on other sites.</td>
+                        <td>_fbp, fr (Facebook), _gcl_au (Google)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>Specific cookies we use</h2>
+            <p>Below is a detailed list of the cookies we use in our Price Arbitrage Finder application:</p>
+            
+            <h3>Essential Cookies</h3>
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Cookie Name</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>arbitrage_session</td>
+                        <td>Maintains your session state across page requests</td>
+                        <td>Session</td>
+                    </tr>
+                    <tr>
+                        <td>csrf_token</td>
+                        <td>Protects against cross-site request forgery attacks</td>
+                        <td>Session</td>
+                    </tr>
+                    <tr>
+                        <td>consent_status</td>
+                        <td>Stores your cookie consent preferences</td>
+                        <td>1 year</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Performance & Analytics Cookies</h3>
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Cookie Name</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>_ga</td>
+                        <td>Distinguishes unique users for Google Analytics</td>
+                        <td>2 years</td>
+                    </tr>
+                    <tr>
+                        <td>_gid</td>
+                        <td>Distinguishes unique users for Google Analytics</td>
+                        <td>24 hours</td>
+                    </tr>
+                    <tr>
+                        <td>_gat</td>
+                        <td>Throttles request rate to Google Analytics</td>
+                        <td>1 minute</td>
+                    </tr>
+                    <tr>
+                        <td>arbitrage_perf</td>
+                        <td>Measures page load performance for optimization</td>
+                        <td>30 days</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Functionality Cookies</h3>
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Cookie Name</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>price_alerts</td>
+                        <td>Stores your price alert preferences</td>
+                        <td>1 year</td>
+                    </tr>
+                    <tr>
+                        <td>currency_pref</td>
+                        <td>Remembers your preferred currency for price display</td>
+                        <td>1 year</td>
+                    </tr>
+                    <tr>
+                        <td>recent_searches</td>
+                        <td>Stores your recent product searches for quick access</td>
+                        <td>30 days</td>
+                    </tr>
+                    <tr>
+                        <td>watchlist</td>
+                        <td>Stores products you're tracking for arbitrage opportunities</td>
+                        <td>1 year</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>How to control cookies</h2>
+            <p>You can set or amend your web browser controls to accept or refuse cookies. If you choose to reject cookies, you may still use our website though your access to some functionality and areas of our website may be restricted.</p>
+            
+            <p>You can manage your cookie preferences for our website at any time by using the cookie preferences tool below.</p>
+            
+            <div class="toggle-container">
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <strong>Essential Cookies</strong>
+                        <p>Required for the website to function properly. Cannot be disabled.</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="essential-cookies" checked disabled>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <strong>Performance Cookies</strong>
+                        <p>Help us understand how visitors interact with our website</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="performance-cookies" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <strong>Functionality Cookies</strong>
+                        <p>Enable enhanced features and personalization</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="functionality-cookies" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <strong>Targeting Cookies</strong>
+                        <p>Used to track visitors across websites for advertising purposes</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="targeting-cookies">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-primary" id="save-preferences">
+                    <i class="fas fa-save"></i> Save Preferences
+                </button>
+                <button class="btn btn-outline" id="accept-all">
+                    <i class="fas fa-check-circle"></i> Accept All
+                </button>
+                <button class="btn btn-outline" id="reject-all">
+                    <i class="fas fa-times-circle"></i> Reject All
+                </button>
+            </div>
+            
+            <h2>Other tracking technologies</h2>
+            <p>In addition to cookies, we may use other similar technologies such as web beacons, pixels, and local storage:</p>
+            
+            <ul>
+                <li><strong>Web beacons:</strong> Tiny graphics with a unique identifier that are used to track user movements around our application</li>
+                <li><strong>Pixels:</strong> Small blocks of code on a web page that allow us to measure user interactions</li>
+                <li><strong>Local Storage:</strong> Technology similar to cookies that stores information in your browser for longer periods</li>
+            </ul>
+            
+            <h2>Changes to this policy</h2>
+            <p>We may update this Cookies Policy from time to time to reflect changes in technology, legislation, or our operations. We will notify you of any material changes by posting the new policy on this page and updating the "Last Updated" date at the top of this policy.</p>
+            
+            <h2>Contact us</h2>
+            <p>If you have any questions about our use of cookies or other technologies, please contact us:</p>
+            
+            <div class="contact-info">
+                <p><strong>Email:</strong> privacy@arbitragefinder.com</p>
+                <p><strong>Address:</strong> 123 Commerce Street, Suite 456, San Francisco, CA 94107</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Price Arbitrage Finder. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved preferences if they exist
+            loadCookiePreferences();
+            
+            // Set up event listeners
+            document.getElementById('save-preferences').addEventListener('click', saveCookiePreferences);
+            document.getElementById('accept-all').addEventListener('click', acceptAllCookies);
+            document.getElementById('reject-all').addEventListener('click', rejectAllCookies);
+            
+            // Function to load saved cookie preferences
+            function loadCookiePreferences() {
+                // In a real implementation, this would read from a cookie or backend
+                const savedPreferences = getCookie('cookie_preferences');
+                
+                if (savedPreferences) {
+                    try {
+                        const preferences = JSON.parse(savedPreferences);
+                        document.getElementById('performance-cookies').checked = preferences.performance;
+                        document.getElementById('functionality-cookies').checked = preferences.functionality;
+                        document.getElementById('targeting-cookies').checked = preferences.targeting;
+                    } catch (e) {
+                        console.error('Error parsing cookie preferences:', e);
+                    }
+                }
+            }
+            
+            // Function to save cookie preferences
+            function saveCookiePreferences() {
+                const preferences = {
+                    necessary: true, // Always required
+                    performance: document.getElementById('performance-cookies').checked,
+                    functionality: document.getElementById('functionality-cookies').checked,
+                    targeting: document.getElementById('targeting-cookies').checked,
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Save to cookie
+                setCookie('cookie_preferences', JSON.stringify(preferences), 365);
+                
+                // In a real implementation, this would also send to your backend
+                sendPreferencesToBackend(preferences);
+                
+                alert('Your cookie preferences have been saved successfully!');
+            }
+            
+            // Function to accept all cookies
+            function acceptAllCookies() {
+                document.getElementById('performance-cookies').checked = true;
+                document.getElementById('functionality-cookies').checked = true;
+                document.getElementById('targeting-cookies').checked = true;
+                saveCookiePreferences();
+            }
+            
+            // Function to reject all non-essential cookies
+            function rejectAllCookies() {
+                document.getElementById('performance-cookies').checked = false;
+                document.getElementById('functionality-cookies').checked = false;
+                document.getElementById('targeting-cookies').checked = false;
+                saveCookiePreferences();
+            }
+            
+            // Helper function to set a cookie
+            function setCookie(name, value, days) {
+                const expires = new Date();
+                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+            }
+            
+            // Helper function to get a cookie
+            function getCookie(name) {
+                const cookieName = `${name}=`;
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i].trim();
+                    if (cookie.indexOf(cookieName) === 0) {
+                        return cookie.substring(cookieName.length, cookie.length);
+                    }
+                }
+                return null;
+            }
+            
+            // Function to simulate sending preferences to backend
+            function sendPreferencesToBackend(preferences) {
+                // In a real implementation, this would send to your backend API
+                console.log('Sending cookie preferences to backend:', preferences);
+                
+                // Example of what a real implementation might look like:
+                /*
+                fetch('/api/cookie-preferences', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': getCSRFToken()
+                    },
+                    body: JSON.stringify(preferences)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Preferences saved to backend:', data);
+                })
+                .catch(error => {
+                    console.error('Error saving preferences to backend:', error);
+                });
+                */
+            }
+            
+            // Function to get CSRF token (for example purposes)
+            function getCSRFToken() {
+                // In a real implementation, this would get the token from a meta tag or cookie
+                return document.querySelector('meta[name="csrf-token"]')?.content || '';
+            }
+        });
+    </script>
+</body>
+</html>

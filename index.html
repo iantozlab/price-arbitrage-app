@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PriceHunter - Find Cheap Global Prices & Save Money</title>
+    <meta name="description" content="Discover products up to 60% cheaper in other countries. Track prices, get alerts, and earn money with our arbitrage platform.">
+    <meta name="keywords" content="price arbitrage, cheap prices, global shopping, save money, affiliate marketing">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/fluency/48/price-tag.png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "PriceHunter",
+      "url": "https://yourdomain.com",
+      "description": "Find products up to 60% cheaper in other countries with our price arbitrage platform.",
+      "applicationCategory": "ShoppingApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://img.icons8.com/fluency/48/price-tag.png" alt="Logo" class="brand-logo">
+                PriceHunter
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#savings-calculator">Savings Calculator</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+                </ul>
+                <div class="d-flex">
+                    </a>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fas fa-user"></i> Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero bg-primary text-white py-5">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h1 class="display-4 fw-bold mb-3">Find Products <span class="text-warning">50% Cheaper</span> Overseas</h1>
+                    <p class="lead mb-4">Discover massive price differences across countries and save thousands on electronics, gadgets, and more</p>
+                    
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-md-8">
+                            <div class="input-group input-group-lg">
+                                <input type="text" class="form-control" placeholder="Search for products (iPhone, PlayStation, MacBook...)" id="searchInput">
+                                <button class="btn btn-warning" onclick="app.searchRealPrices()">
+                                    <i class="fas fa-search"></i> Find Deals
+                                </button>
+                            </div>
+                            <div class="mt-2 text-center">
+                                <span class="badge bg-light text-dark me-2">Trending: </span>
+                                <a href="#" class="text-white me-2" onclick="app.searchTrending('iPhone 15 Pro')">iPhone 15 Pro</a>
+                                <a href="#" class="text-white me-2" onclick="app.searchTrending('PlayStation 5')">PS5</a>
+                                <a href="#" class="text-white me-2" onclick="app.searchTrending('MacBook Pro')">MacBook Pro</a>
+                                <a href="#" class="text-white" onclick="app.searchTrending('Dyson Vacuum')">Dyson</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar py-3 bg-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <h3 class="text-primary mb-0" id="totalUsers">12,847</h3>
+                        <small class="text-muted">Active Users</small>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <h3 class="text-success mb-0" id="totalSavings">$382,950</h3>
+                        <small class="text-muted">Total Saved</small>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <h3 class="text-info mb-0" id="productsTracked">2,548</h3>
+                        <small class="text-muted">Products Tracked</small>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <h3 class="text-warning mb-0" id="priceAlerts">14,327</h3>
+                        <small class="text-muted">Price Alerts Sent</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Spinner -->
+    <div class="text-center py-4">
+        <div class="loading-spinner" id="loadingSpinner"></div>
+    </div>
+
+    <!-- Products Grid -->
+    <section id="products" class="py-5">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h2 class="mb-0">Latest Price Drops</h2>
+                    <p class="text-muted">Real-time prices from around the world</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="btn-group">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-filter"></i> Filter by Category
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="app.filterProducts('all')">All Categories</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="app.filterProducts('electronics')">Electronics</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="app.filterProducts('gaming')">Gaming</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="app.filterProducts('computers')">Computers</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="app.filterProducts('home')">Home Appliances</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="productsGrid">
+                <!-- Products will be loaded here dynamically -->
+            </div>
+
+            <div class="text-center mt-5">
+                <button class="btn btn-outline-primary" id="loadMoreBtn">
+                    <i class="fas fa-refresh"></i> Load More Products
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">How PriceHunter Works</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="step-number">1</div>
+                            <i class="fas fa-search fa-3x text-primary mb-3"></i>
+                            <h4>Find Price Differences</h4>
+                            <p>Our system scans thousands of products across multiple countries to find the best deals.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="step-number">2</div>
+                            <i class="fas fa-bell fa-3x text-warning mb-3"></i>
+                            <h4>Get Price Alerts</h4>
+                            <p>Set target prices and get notified when products drop to your desired price point.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="step-number">3</div>
+                            <i class="fas fa-money-bill-wave fa-3x text-success mb-3"></i>
+                            <h4>Save Money & Earn</h4>
+                            <p>Buy through our links to save money and earn commissions on your purchases.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Savings Calculator -->
+    <section id="savings-calculator" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Savings Calculator</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow">
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Product Price in Your Country</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control" id="localPrice" value="1000">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Savings Percentage</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="savingsPercent" value="25">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center my-4">
+                                <button class="btn btn-primary" onclick="calculateSavings()">
+                                    <i class="fas fa-calculator"></i> Calculate Savings
+                                </button>
+                            </div>
+                            <div class="result-box text-center p-4 bg-light rounded">
+                                <h4>You Could Save</h4>
+                                <h2 class="text-success" id="savingsResult">$250.00</h2>
+                                <p class="text-muted">On this single purchase</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-5 bg-dark text-white">
+        <div class="container">
+            <h2 class="text-center mb-5">What Our Users Say</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 bg-secondary text-white">
+                        <div class="card-body">
+                            <div class="text-warning mb-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="card-text">"Saved $420 on my MacBook Pro by buying from Japan instead of the US. This app paid for itself 10 times over!"</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="rounded-circle me-2" width="40">
+                                <div>
+                                    <strong>Michael Chen</strong>
+                                    <p class="mb-0 text-muted">Software Developer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 bg-secondary text-white">
+                        <div class="card-body">
+                            <div class="text-warning mb-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="card-text">"The price alerts are a game-changer. I got notified when the PlayStation 5 dropped 30% in Germany and grabbed it immediately."</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="rounded-circle me-2" width="40">
+                                <div>
+                                    <strong>Sarah Johnson</strong>
+                                    <p class="mb-0 text-muted">Graphic Designer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 bg-secondary text-white">
+                        <div class="card-body">
+                            <div class="text-warning mb-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="card-text">"I've earned over $2,000 in affiliate commissions just by sharing my finds with friends. This platform is incredible!"</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="https://randomuser.me/api/portraits/men/62.jpg" alt="User" class="rounded-circle me-2" width="40">
+                                <div>
+                                    <strong>David Wilson</strong>
+                                    <p class="mb-0 text-muted">College Student</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Frequently Asked Questions</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    How does PriceHunter make money?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We earn small commissions when you purchase through our affiliate links. This doesn't cost you anything extra - in fact, you save money by finding better prices!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    Is international shipping expensive?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Often, the savings on the product price more than cover any additional shipping costs. We also factor in shipping and import fees when calculating potential savings.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    How often are prices updated?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Our system checks prices every 6 hours for most products, and every hour for popular items with frequent price changes.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h3>Get the Best Deals Delivered to Your Inbox</h3>
+                    <p class="mb-4">Join thousands of smart shoppers who never overpay again</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="input-group mb-3">
+                                <input type="email" class="form-control form-control-lg" placeholder="Your email address">
+                                <button class="btn btn-warning btn-lg">Subscribe</button>
+                            </div>
+                            <small class="text-white-50">We respect your privacy. Unsubscribe at any time.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>PriceHunter</h5>
+                    <p>Find the best international prices and save money on your purchases. Join our community of smart shoppers today.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Home</a></li>
+                        <li><a href="#products" class="text-white-50">Products</a></li>
+                        <li><a href="#how-it-works" class="text-white-50">How It Works</a></li>
+                        <li><a href="#faq" class="text-white-50">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Legal</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="privacy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="#" class="text-white-50">Cookie Policy</a></li>
+                        <li><a href="#" class="text-white-50">Affiliate Disclosure</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> support@pricehunter.com</li>
+                        <li><i class="fas fa-globe me-2"></i> www.pricehunter.com</li>
+                    </ul>
+                    <div class="mt-3">
+                        <img src="https://via.placeholder.com/250x80/333/fff?text=Payment+Methods" alt="Payment Methods" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 PriceHunter. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Made with <i class="fas fa-heart text-danger"></i> for smart shoppers</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sign In to Your Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Email address</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#">Forgot password?</a> | <a href="#">Create account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Initialize the app -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the app
+            if (typeof app !== 'undefined') {
+                app.init();
+                
+                // Load initial products
+                app.loadInitialProducts();
+                
+                // Update stats
+                app.updateStats();
+            }
+            
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+        });
+        
+        // Calculate savings function
+        function calculateSavings() {
+            const localPrice = parseFloat(document.getElementById('localPrice').value);
+            const savingsPercent = parseFloat(document.getElementById('savingsPercent').value);
+            
+            if (!isNaN(localPrice) && !isNaN(savingsPercent)) {
+                const savingsAmount = (localPrice * savingsPercent) / 100;
+                document.getElementById('savingsResult').textContent = `$${savingsAmount.toFixed(2)}`;
+            }
+        }
+        
+        // Initialize savings calculator with default values
+        calculateSavings();
+    </script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    <div id="cookie-consent" class="cookie-consent">
+    <div class="cookie-content">
+        <h3><i class="fas fa-cookie-bite"></i> Cookie Policy</h3>
+        <p>We use cookies to enhance your experience, analyze traffic, and serve personalized content. By continuing to use our app, you consent to our use of cookies.</p>
+        <div class="cookie-buttons">
+            <button id="cookie-accept" class="btn btn-primary">Accept All</button>
+            <button id="cookie-settings" class="btn">Preferences</button>
+            <a href="privacy.html" class="btn">Learn More</a>
+        </div>
+    </div>
+</div>
+<div id="cookie-settings-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2><i class="fas fa-sliders-h"></i> Cookie Preferences</h2>
+        <div class="cookie-option">
+            <label class="toggle">
+                <input type="checkbox" id="necessary-cookies" checked disabled>
+                <span class="toggle-slider"></span>
+            </label>
+            <div class="cookie-desc">
+                <strong>Necessary Cookies</strong>
+                <p>Essential for the website to function properly. Cannot be disabled.</p>
+            </div>
+        </div>
+        <div class="cookie-option">
+            <label class="toggle">
+                <input type="checkbox" id="analytics-cookies" checked>
+                <span class="toggle-slider"></span>
+            </label>
+            <div class="cookie-desc">
+                <strong>Analytics Cookies</strong>
+                <p>Help us understand how visitors interact with our website.</p>
+            </div>
+        </div>
+        <div class="cookie-option">
+            <label class="toggle">
+                <input type="checkbox" id="marketing-cookies">
+                <span class="toggle-slider"></span>
+            </label>
+            <div class="cookie-desc">
+                <strong>Marketing Cookies</strong>
+                <p>Used to track visitors across websites for advertising purposes.</p>
+            </div>
+        </div>
+        <button id="save-cookie-settings" class="btn btn-primary">Save Preferences</button>
+    </div>
+</div>
+</body>
+</html>

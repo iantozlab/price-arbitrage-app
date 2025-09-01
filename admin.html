@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Price Arbitrage App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-panel">
+    <div class="sidebar">
+        <div class="p-3 text-center">
+            <img src="https://img.icons8.com/fluency/48/price-tag.png" alt="Logo" class="img-fluid mb-2" style="width: 40px;">
+            <h5 class="text-white mb-0">PriceHunter Pro</h5>
+            <small class="text-muted">Admin Dashboard</small>
+        </div>
+        <nav class="nav flex-column mt-3">
+            <a href="admin.html" class="btn btn-outline-light me-2">
+                        <i class="fas fa-cog"></i> Admin
+            <a class="nav-link active" href="#dashboard" onclick="showSection('dashboard')">
+                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+            </a>
+            <a class="nav-link" href="#products" onclick="showSection('products')">
+                <i class="fas fa-box me-2"></i> Products
+            </a>
+            <a class="nav-link" href="#affiliate" onclick="showSection('affiliate')">
+                <i class="fas fa-link me-2"></i> Affiliate Manager
+            </a>
+            <a class="nav-link" href="#subscriptions" onclick="showSection('subscriptions')">
+                <i class="fas fa-crown me-2"></i> Subscriptions
+            </a>
+            <a class="nav-link" href="#alerts" onclick="showSection('alerts')">
+                <i class="fas fa-bell me-2"></i> Price Alerts
+            </a>
+            <a class="nav-link" href="#users" onclick="showSection('users')">
+                <i class="fas fa-users me-2"></i> Users
+            </a>
+            <a class="nav-link" href="#analytics" onclick="showSection('analytics')">
+                <i class="fas fa-chart-line me-2"></i> Analytics
+            </a>
+            <a class="nav-link" href="#settings" onclick="showSection('settings')">
+                <i class="fas fa-cog me-2"></i> Settings
+            </a>
+            <div class="mt-3 p-3">
+                <a class="nav-link text-warning" href="/">
+                    <i class="fas fa-external-link-alt me-2"></i> View Live Site
+                </a>
+                <a class="nav-link text-danger" href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="section">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-tachometer-alt me-2"></i> Dashboard Overview</h2>
+                    <div class="btn-group">
+                        <button class="btn btn-outline-secondary">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Total Earnings</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$<span id="totalEarnings">2,847.50</span></div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Active Users</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="activeUsers">1,247</span></div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            Affiliate Clicks</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="totalClicks">12,847</span></div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-mouse-pointer fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            Premium Subscribers</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="premiumUsers">89</span></div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-crown fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row">
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <canvas id="earningsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-pie pt-4 pb-2">
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                                <div class="mt-4 text-center small">
+                                    <span class="mr-2">
+                                        <i class="fas fa-circle text-primary"></i> Affiliate
+                                    </span>
+                                    <span class="mr-2">
+                                        <i class="fas fa-circle text-success"></i> Subscriptions
+                                    </span>
+                                    <span class="mr-2">
+                                        <i class="fas fa-circle text-info"></i> Sponsorships
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Recent Activity</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="activity-feed">
+                                    <div class="feed-item">
+                                        <div class="feed-icon bg-success">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </div>
+                                        <div class="feed-content">
+                                            <span class="text-success">New sale!</span> iPhone 15 Pro via Amazon
+                                            <div class="text-muted">2 minutes ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="feed-item">
+                                        <div class="feed-icon bg-info">
+                                            <i class="fas fa-user-plus"></i>
+                                        </div>
+                                        <div class="feed-content">
+                                            <span class="text-info">New user registered:</span> john@example.com
+                                            <div class="text-muted">15 minutes ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="feed-item">
+                                        <div class="feed-icon bg-warning">
+                                            <i class="fas fa-crown"></i>
+                                        </div>
+                                        <div class="feed-content">
+                                            <span class="text-warning">Premium subscription:</span> Monthly plan activated
+                                            <div class="text-muted">1 hour ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="feed-item">
+                                        <div class="feed-icon bg-danger">
+                                            <i class="fas fa-bell"></i>
+                                        </div>
+                                        <div class="feed-content">
+                                            <span class="text-danger">Price alert triggered:</span> PS5 price drop detected
+                                            <div class="text-muted">2 hours ago</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Top Performing Products</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="product-performance">
+                                    <div class="product-item">
+                                        <div class="product-info">
+                                            <strong>iPhone 15 Pro</strong>
+                                            <small class="text-muted">Electronics</small>
+                                        </div>
+                                        <div class="product-stats">
+                                            <span class="text-success">$1,247.50</span>
+                                            <div class="progress mt-1" style="height: 5px;">
+                                                <div class="progress-bar bg-success" style="width: 85%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-item">
+                                        <div class="product-info">
+                                            <strong>PlayStation 5</strong>
+                                            <small class="text-muted">Gaming</small>
+                                        </div>
+                                        <div class="product-stats">
+                                            <span class="text-success">$847.30</span>
+                                            <div class="progress mt-1" style="height: 5px;">
+                                                <div class="progress-bar bg-success" style="width: 65%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-item">
+                                        <div class="product-info">
+                                            <strong>MacBook Pro</strong>
+                                            <small class="text-muted">Computers</small>
+                                        </div>
+                                        <div class="product-stats">
+                                            <span class="text-success">$523.80</span>
+                                            <div class="progress mt-1" style="height: 5px;">
+                                                <div class="progress-bar bg-success" style="width: 45%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-item">
+                                        <div class="product-info">
+                                            <strong>Dyson Vacuum</strong>
+                                            <small class="text-muted">Home</small>
+                                        </div>
+                                        <div class="product-stats">
+                                            <span class="text-success">$229.90</span>
+                                            <div class="progress mt-1" style="height: 5px;">
+                                                <div class="progress-bar bg-success" style="width: 30%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Management Section -->
+        <div id="products-section" class="section" style="display: none;">
+            <div class="container-fluid">
+                <h2><i class="fas fa-box me-2"></i> Product Management</h2>
+                
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Tracked Products</h5>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                                <i class="fas fa-plus me-1"></i> Add Product
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Current Price</th>
+                                        <th>Best Country</th>
+                                        <th>Savings</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-7inch-naturaltitanium?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1692846359310" 
+                                                     class="product-thumbnail me-3" alt="iPhone">
+                                                <div>
+                                                    <strong>iPhone 15 Pro</strong>
+                                                    <div class="text-muted small">MTQ53LL/A</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Electronics</td>
+                                        <td>$1,199.00</td>
+                                        <td>
+                                            <span class="badge bg-success">Japan</span>
+                                        </td>
+                                        <td class="text-success">15%</td>
+                                        <td>
+                                            <span class="badge bg-success">Active</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-digital-edition-product-thumbnail-01-en-21sep21?$1600px$" 
+                                                     class="product-thumbnail me-3" alt="PS5">
+                                                <div>
+                                                    <strong>PlayStation 5</strong>
+                                                    <div class="text-muted small">CFI-2000B01X</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Gaming</td>
+                                        <td>$399.00</td>
+                                        <td>
+                                            <span class="badge bg-info">UK</span>
+                                        </td>
+                                        <td class="text-success">12%</td>
+                                        <td>
+                                            <span class="badge bg-success">Active</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Affiliate Manager Section -->
+        <div id="affiliate-section" class="section" style="display: none;">
+            <div class="container-fluid">
+                <h2><i class="fas fa-link me-2"></i> Affiliate Manager</h2>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Affiliate Network Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Amazon Affiliate Tag</label>
+                                    <input type="text" class="form-control" id="amazonTag" value="yourname-20">
+                                    <small class="form-text text-muted">Your Amazon Associates tracking ID</small>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Commission Rates</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="number" class="form-control" value="4.0" step="0.1">
+                                            <small class="form-text text-muted">Electronics (%)</small>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="number" class="form-control" value="8.0" step="0.1">
+                                            <small class="form-text text-muted">Home Goods (%)</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn btn-success">
+                                    <i class="fas fa-save me-1"></i> Save Settings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Performance Overview</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="affiliate-stats">
+                                    <div class="stat-item">
+                                        <i class="fas fa-mouse-pointer fa-2x text-primary"></i>
+                                        <div>
+                                            <h4>12,847</h4>
+                                            <small>Total Clicks</small>
+                                        </div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-shopping-cart fa-2x text-success"></i>
+                                        <div>
+                                            <h4>247</h4>
+                                            <small>Conversions</small>
+                                        </div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-percentage fa-2x text-info"></i>
+                                        <div>
+                                            <h4>1.92%</h4>
+                                            <small>Conversion Rate</small>
+                                        </div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-dollar-sign fa-2x text-warning"></i>
+                                        <div>
+                                            <h4>$2,847.50</h4>
+                                            <small>Total Earnings</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add more sections for Subscriptions, Alerts, Users, Analytics, Settings -->
+
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProductForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-select" required>
+                                        <option value="">Select Category</option>
+                                        <option value="electronics">Electronics</option>
+                                        <option value="gaming">Gaming</option>
+                                        <option value="computers">Computers</option>
+                                        <option value="home">Home Goods</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Product URL or ASIN</label>
+                            <input type="text" class="form-control" placeholder="Amazon ASIN or Product URL">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Target Countries</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="US" checked>
+                                <label class="form-check-label">United States</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="UK" checked>
+                                <label class="form-check-label">United Kingdom</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="DE" checked>
+                                <label class="form-check-label">Germany</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="JP" checked>
+                                <label class="form-check-label">Japan</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Section navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId + '-section').style.display = 'block';
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Earnings Chart
+            const earningsCtx = document.getElementById('earningsChart').getContext('2d');
+            new Chart(earningsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Earnings',
+                        data: [1200, 1900, 1500, 2100, 2847, 2310],
+                        borderColor: '#4e73df',
+                        backgroundColor: 'rgba(78, 115, 223, 0.05)',
+                        pointRadius: 3,
+                        pointBackgroundColor: '#4e73df',
+                        pointBorderColor: '#4e73df',
+                        pointHoverRadius: 5,
+                        fill: true
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(revenueCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Affiliate', 'Subscriptions', 'Sponsorships'],
+                    datasets: [{
+                        data: [65, 25, 10],
+                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+                        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                        hoverBorderColor: 'rgba(234, 236, 244, 1)',
+                    }],
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load settings from localStorage
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('adminSettings') || '{}');
+            if (settings.amazonTag) {
+                document.getElementById('amazonTag').value = settings.amazonTag;
+            }
+        }
+
+        // Save settings
+        function saveSettings() {
+            const settings = {
+                amazonTag: document.getElementById('amazonTag').value,
+                // Add more settings here
+            };
+            localStorage.setItem('adminSettings', JSON.stringify(settings));
+            alert('Settings saved successfully!');
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = '/admin-login.html';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            loadSettings();
+            showSection('dashboard');
+        });
+    </script>
+</body>
+</html>
